@@ -25,8 +25,9 @@ void Main()
 			shots.push_back(p);
 		}
 
-		for (const auto& shot : shots) {
-			Circle(shot, 5).draw(Palette::Green);
+		for (auto& shot : shots) {
+			shot.x += 20;
+			Circle(Arg::center(shot), 5).draw(Palette::Green);
 		}
 
 		RectF(Arg::center(p), Size(30, 30)).draw(Palette::Blue);
