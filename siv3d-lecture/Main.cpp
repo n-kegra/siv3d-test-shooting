@@ -1,10 +1,15 @@
 ﻿# include <Siv3D.hpp> // OpenSiv3D v0.6.3
 
+struct Shot {
+	Vec2 pos;
+	Vec2 vel;
+};
+
 void Main()
 {
 	Vec2 player = { 100, 100 };
 
-	Array<Vec2> shots;
+	Array<Shot> shots;
 
 	Array<Vec2> enemies;
 
@@ -14,7 +19,7 @@ void Main()
 
 	while (System::Update())
 	{
-		// process
+		// process		
 		// player process
 		if (KeyUp.pressed()) {
 			player.y -= 10;
@@ -30,16 +35,18 @@ void Main()
 		}
 
 		if (KeySpace.down()) {
-			shots.push_back(player);
+			shots.push_back(Shot{ player, Vec2{20, -2} });
+			shots.push_back(Shot{ player, Vec2{20,  0} });
+			shots.push_back(Shot{ player, Vec2{20, +2} });
 		}
 
 		// shots process
 		for (auto& shot : shots) {
-			shot.x += 20;
+			shot.pos += shot.vel;
 		}
 
 		shots.remove_if([](auto shot) {
-			return shot.x > 800;
+			return shot.pos.x > 800;
 		});
 
 		// enemies process
@@ -55,7 +62,7 @@ void Main()
 
 		enemies.remove_if([&shots](auto enemy) {
 			for (const auto& shot : shots) {
-				if (Circle(Arg::center(shot), 5).intersects(RectF(Arg::center(enemy), Size(60, 60)))) {
+				if (Circle(Arg::center(shot.pos), 5).intersects(RectF(Arg::center(enemy), Size(60, 60)))) {
 					return true;
 				}
 			}
@@ -70,7 +77,7 @@ void Main()
 
 		// draw shots
 		for (const auto& shot : shots) {
-			Circle(Arg::center(shot), 5).draw(Palette::Cyan);
+			Circle(Arg::center(shot.pos), 5).draw(Palette::Cyan);
 		}
 
 		// draw enemies
