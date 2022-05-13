@@ -2,10 +2,10 @@
 
 void Main()
 {
+	Vec2 p = { 100, 100 };
+
 	while (System::Update())
 	{
-		if (KeySpace.pressed()) {
-			RectF(Vec2(100, 100), Size(30, 30)).draw(Palette::Blue);
-		}
+		RectF(p, Size(30, 30)).draw(Palette::Blue);
 	}
 }
