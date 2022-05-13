@@ -3,11 +3,13 @@
 struct Shot {
 	Vec2 pos;
 	Vec2 vel;
+	bool alive;
 };
 
 struct Enemy {
 	Vec2 pos;
 	int size;
+	bool alive;
 };
 
 void Main()
@@ -24,7 +26,17 @@ void Main()
 
 	while (System::Update())
 	{
-		// process		
+		// process
+		// shot vs enemy
+		for (auto& shot : shots) {
+			for (auto& enemy : enemies) {
+				if (Circle(Arg::center(shot.pos), 5).intersects(RectF(Arg::center(enemy.pos), Size(enemy.size, enemy.size)))) {
+					shot.alive = false;
+					enemy.alive = false;
+				}
+			}
+		}
+
 		// player process
 		if (KeyUp.pressed()) {
 			player.y -= 10;
@@ -40,9 +52,9 @@ void Main()
 		}
 
 		if (KeySpace.down()) {
-			shots.push_back(Shot{ player, Vec2{20, -2} });
-			shots.push_back(Shot{ player, Vec2{20,  0} });
-			shots.push_back(Shot{ player, Vec2{20, +2} });
+			shots.push_back(Shot{ player, Vec2{20, -2}, true });
+			shots.push_back(Shot{ player, Vec2{20,  0}, true });
+			shots.push_back(Shot{ player, Vec2{20, +2}, true });
 		}
 
 		// shots process
@@ -51,7 +63,7 @@ void Main()
 		}
 
 		shots.remove_if([](auto shot) {
-			return shot.pos.x > 800;
+			return shot.pos.x > 800 || !shot.alive;
 		});
 
 		// enemies process
@@ -60,18 +72,13 @@ void Main()
 		}
 
 		if (enemy_timer.reachedZero()) {
-			enemies.push_back(Enemy{ Vec2{ 800, Random(0, 600) }, Random(30, 90) });
+			enemies.push_back(Enemy{ Vec2{ 800, Random(0, 600) }, Random(30, 90), true });
 
 			enemy_timer.restart();
 		}
 
 		enemies.remove_if([&shots](auto enemy) {
-			for (const auto& shot : shots) {
-				if (Circle(Arg::center(shot.pos), 5).intersects(RectF(Arg::center(enemy.pos), Size(enemy.size, enemy.size)))) {
-					return true;
-				}
-			}
-			return false;
+			return !enemy.alive;
 		});
 
 		// draw
