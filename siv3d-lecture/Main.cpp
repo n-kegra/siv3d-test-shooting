@@ -6,6 +6,10 @@ void Main()
 
 	Array<Vec2> shots;
 
+	Array<Vec2> enemies;
+
+	enemies.push_back(Vec2{ 800, 300 });
+
 	while (System::Update())
 	{
 		// process
@@ -34,7 +38,15 @@ void Main()
 			return shot.x > 800;
 		});
 
+		for (auto& enemy : enemies) {
+			enemy.x -= 2;
+		}
+
 		// draw
+		for (const auto& enemy : enemies) {
+			RectF(Arg::center(enemy), Size(60, 60)).draw(Palette::Red);
+		}
+
 		for (const auto& shot : shots) {
 			Circle(Arg::center(shot), 5).draw(Palette::Cyan);
 		}
