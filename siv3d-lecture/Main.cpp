@@ -36,7 +36,7 @@ void Main()
 
 		// draw
 		for (const auto& shot : shots) {
-			Circle(Arg::center(shot), 5).draw(Palette::Green);
+			Circle(Arg::center(shot), 5).draw(Palette::Cyan);
 		}
 
 		RectF(Arg::center(p), Size(30, 30)).draw(Palette::Blue);
