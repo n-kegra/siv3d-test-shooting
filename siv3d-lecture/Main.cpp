@@ -28,6 +28,8 @@ void Main()
 	int score = 0;
 
 	const Texture player_image(U"player.png");
+	const Texture player_shot_image(U"player_shot.png");
+	const Texture enemy_image(U"enemy.png");
 
 	while (System::Update())
 	{
@@ -93,12 +95,12 @@ void Main()
 		// draw
 		// draw player
 		for (const auto& enemy : enemies) {
-			RectF(Arg::center(enemy.pos), Size(enemy.size, enemy.size)).draw(Palette::Red);
+			enemy_image.resized(enemy.size, enemy.size).drawAt(enemy.pos);
 		}
 
 		// draw shots
 		for (const auto& shot : shots) {
-			Circle(Arg::center(shot.pos), 5).draw(Palette::Cyan);
+			player_shot_image.drawAt(shot.pos);
 		}
 
 		// draw enemies
