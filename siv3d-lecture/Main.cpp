@@ -30,6 +30,9 @@ void Main()
 		// shot vs enemy
 		for (auto& shot : shots) {
 			for (auto& enemy : enemies) {
+				if (!shot.alive || !enemy.alive)
+					continue;
+
 				if (Circle(Arg::center(shot.pos), 5).intersects(RectF(Arg::center(enemy.pos), Size(enemy.size, enemy.size)))) {
 					shot.alive = false;
 					enemy.alive = false;
