@@ -30,6 +30,10 @@ void Main()
 			shot.x += 20;
 		}
 
+		shots.remove_if([](auto shot) {
+			return shot.x > 800;
+		});
+
 		// draw
 		for (const auto& shot : shots) {
 			Circle(Arg::center(shot), 5).draw(Palette::Green);
