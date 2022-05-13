@@ -8,7 +8,9 @@ void Main()
 
 	Array<Vec2> enemies;
 
-	enemies.push_back(Vec2{ 800, 300 });
+	Timer enemy_timer;
+	enemy_timer.set(1s);
+	enemy_timer.start();
 
 	while (System::Update())
 	{
@@ -40,6 +42,12 @@ void Main()
 
 		for (auto& enemy : enemies) {
 			enemy.x -= 2;
+		}
+
+		if (enemy_timer.reachedZero()) {
+			enemies.push_back(Vec2{ 800, Random(0, 600) });
+
+			enemy_timer.restart();
 		}
 
 		enemies.remove_if([&shots](auto enemy) {
