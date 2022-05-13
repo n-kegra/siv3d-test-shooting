@@ -42,6 +42,15 @@ void Main()
 			enemy.x -= 2;
 		}
 
+		enemies.remove_if([&shots](auto enemy) {
+			for (const auto& shot : shots) {
+				if (Circle(Arg::center(shot), 5).intersects(RectF(Arg::center(enemy), Size(60, 60)))) {
+					return true;
+				}
+			}
+			return false;
+		});
+
 		// draw
 		for (const auto& enemy : enemies) {
 			RectF(Arg::center(enemy), Size(60, 60)).draw(Palette::Red);
