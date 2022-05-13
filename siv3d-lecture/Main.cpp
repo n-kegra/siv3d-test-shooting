@@ -31,6 +31,9 @@ void Main()
 	const Texture player_shot_image(U"player_shot.png");
 	const Texture enemy_image(U"enemy.png");
 
+	const Audio player_shot_se(U"player_shot_se.wav");
+	const Audio boom_se(U"boom.wav");
+
 	while (System::Update())
 	{
 		// process
@@ -44,6 +47,7 @@ void Main()
 					shot.alive = false;
 					enemy.alive = false;
 					score += 1;
+					boom_se.playOneShot();
 				}
 			}
 		}
@@ -66,6 +70,7 @@ void Main()
 			shots.push_back(Shot{ player, Vec2{20, -2}, true });
 			shots.push_back(Shot{ player, Vec2{20,  0}, true });
 			shots.push_back(Shot{ player, Vec2{20, +2}, true });
+			player_shot_se.playOneShot();
 		}
 
 		// shots process
