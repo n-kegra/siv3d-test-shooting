@@ -5,13 +5,18 @@ struct Shot {
 	Vec2 vel;
 };
 
+struct Enemy {
+	Vec2 pos;
+	int size;
+};
+
 void Main()
 {
 	Vec2 player = { 100, 100 };
 
 	Array<Shot> shots;
 
-	Array<Vec2> enemies;
+	Array<Enemy> enemies;
 
 	Timer enemy_timer;
 	enemy_timer.set(1s);
@@ -51,18 +56,18 @@ void Main()
 
 		// enemies process
 		for (auto& enemy : enemies) {
-			enemy.x -= 2;
+			enemy.pos.x -= 2;
 		}
 
 		if (enemy_timer.reachedZero()) {
-			enemies.push_back(Vec2{ 800, Random(0, 600) });
+			enemies.push_back(Enemy{ Vec2{ 800, Random(0, 600) }, Random(30, 90) });
 
 			enemy_timer.restart();
 		}
 
 		enemies.remove_if([&shots](auto enemy) {
 			for (const auto& shot : shots) {
-				if (Circle(Arg::center(shot.pos), 5).intersects(RectF(Arg::center(enemy), Size(60, 60)))) {
+				if (Circle(Arg::center(shot.pos), 5).intersects(RectF(Arg::center(enemy.pos), Size(enemy.size, enemy.size)))) {
 					return true;
 				}
 			}
@@ -72,7 +77,7 @@ void Main()
 		// draw
 		// draw player
 		for (const auto& enemy : enemies) {
-			RectF(Arg::center(enemy), Size(60, 60)).draw(Palette::Red);
+			RectF(Arg::center(enemy.pos), Size(enemy.size, enemy.size)).draw(Palette::Red);
 		}
 
 		// draw shots
