@@ -24,6 +24,9 @@ void Main()
 	enemy_timer.set(1s);
 	enemy_timer.start();
 
+	const Font font{ 32 };
+	int score = 0;
+
 	while (System::Update())
 	{
 		// process
@@ -36,6 +39,7 @@ void Main()
 				if (Circle(Arg::center(shot.pos), 5).intersects(RectF(Arg::center(enemy.pos), Size(enemy.size, enemy.size)))) {
 					shot.alive = false;
 					enemy.alive = false;
+					score += 1;
 				}
 			}
 		}
@@ -97,5 +101,8 @@ void Main()
 
 		// draw enemies
 		RectF(Arg::center(player), Size(30, 30)).draw(Palette::Blue);
+
+		// draw score
+		font(U"Score: "+ Format(score)).draw(0, 0, Palette::White);
 	}
 }
