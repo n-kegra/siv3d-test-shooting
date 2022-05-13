@@ -6,6 +6,19 @@ void Main()
 
 	while (System::Update())
 	{
+		if (KeyUp.pressed()) {
+			p.y -= 10;
+		}
+		if (KeyDown.pressed()) {
+			p.y += 10;
+		}
+		if (KeyLeft.pressed()) {
+			p.x -= 10;
+		}
+		if (KeyRight.pressed()) {
+			p.x += 10;
+		}
+
 		RectF(p, Size(30, 30)).draw(Palette::Blue);
 	}
 }
