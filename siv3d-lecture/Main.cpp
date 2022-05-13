@@ -19,6 +19,6 @@ void Main()
 			p.x += 10;
 		}
 
-		RectF(p, Size(30, 30)).draw(Palette::Blue);
+		RectF(Arg::center(p), Size(30, 30)).draw(Palette::Blue);
 	}
 }
