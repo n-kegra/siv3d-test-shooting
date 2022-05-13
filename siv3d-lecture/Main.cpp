@@ -2,7 +2,7 @@
 
 void Main()
 {
-	Vec2 p = { 100, 100 };
+	Vec2 player = { 100, 100 };
 
 	Array<Vec2> shots;
 
@@ -17,20 +17,20 @@ void Main()
 		// process
 		// player process
 		if (KeyUp.pressed()) {
-			p.y -= 10;
+			player.y -= 10;
 		}
 		if (KeyDown.pressed()) {
-			p.y += 10;
+			player.y += 10;
 		}
 		if (KeyLeft.pressed()) {
-			p.x -= 10;
+			player.x -= 10;
 		}
 		if (KeyRight.pressed()) {
-			p.x += 10;
+			player.x += 10;
 		}
 
 		if (KeySpace.down()) {
-			shots.push_back(p);
+			shots.push_back(player);
 		}
 
 		// shots process
@@ -74,6 +74,6 @@ void Main()
 		}
 
 		// draw enemies
-		RectF(Arg::center(p), Size(30, 30)).draw(Palette::Blue);
+		RectF(Arg::center(player), Size(30, 30)).draw(Palette::Blue);
 	}
 }
