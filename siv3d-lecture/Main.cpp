@@ -27,6 +27,8 @@ void Main()
 	const Font font{ 32 };
 	int score = 0;
 
+	const Texture player_image(U"player.png");
+
 	while (System::Update())
 	{
 		// process
@@ -100,7 +102,7 @@ void Main()
 		}
 
 		// draw enemies
-		RectF(Arg::center(player), Size(30, 30)).draw(Palette::Blue);
+		player_image.drawAt(player);
 
 		// draw score
 		font(U"Score: "+ Format(score)).draw(0, 0, Palette::White);
