@@ -15,6 +15,7 @@ void Main()
 	while (System::Update())
 	{
 		// process
+		// player process
 		if (KeyUp.pressed()) {
 			p.y -= 10;
 		}
@@ -32,6 +33,7 @@ void Main()
 			shots.push_back(p);
 		}
 
+		// shots process
 		for (auto& shot : shots) {
 			shot.x += 20;
 		}
@@ -40,6 +42,7 @@ void Main()
 			return shot.x > 800;
 		});
 
+		// enemies process
 		for (auto& enemy : enemies) {
 			enemy.x -= 2;
 		}
@@ -60,14 +63,17 @@ void Main()
 		});
 
 		// draw
+		// draw player
 		for (const auto& enemy : enemies) {
 			RectF(Arg::center(enemy), Size(60, 60)).draw(Palette::Red);
 		}
 
+		// draw shots
 		for (const auto& shot : shots) {
 			Circle(Arg::center(shot), 5).draw(Palette::Cyan);
 		}
 
+		// draw enemies
 		RectF(Arg::center(p), Size(30, 30)).draw(Palette::Blue);
 	}
 }
