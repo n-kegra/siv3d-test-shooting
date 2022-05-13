@@ -8,6 +8,7 @@ void Main()
 
 	while (System::Update())
 	{
+		// process
 		if (KeyUp.pressed()) {
 			p.y -= 10;
 		}
@@ -27,6 +28,10 @@ void Main()
 
 		for (auto& shot : shots) {
 			shot.x += 20;
+		}
+
+		// draw
+		for (const auto& shot : shots) {
 			Circle(Arg::center(shot), 5).draw(Palette::Green);
 		}
 
